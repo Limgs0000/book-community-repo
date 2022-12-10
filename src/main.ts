@@ -7,6 +7,6 @@ async function bootstrap() {
 
   setupSwagger(app);
 
-  await app.listen(3000);
+  await app.listen(process.env.MAIN_PORT);
 }
-bootstrap();
+bootstrap().then((res) => console.log(res));
