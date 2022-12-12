@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { setupSwagger } from './utils/setupSwagger';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 dotenv.config({
   path: path.resolve(
@@ -15,11 +16,11 @@ dotenv.config({
 });
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {});
 
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   setupSwagger(app);
 
-  await app.listen(process.env.MAIN_PORT);
-  // await app.listen(3000);
+  await app.listen(process.env.SERVER_PORT);
 }
-bootstrap().then((res) => console.log(res));
+bootstrap().then(() => console.log('Server Run!'));
