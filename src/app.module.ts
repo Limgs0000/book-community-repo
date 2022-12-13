@@ -9,6 +9,7 @@ import {
 } from 'nest-winston';
 import * as winston from 'winston';
 import * as moment from 'moment';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 
 const logLevel = process.env.NODE_ENV === 'production' ? 'error' : 'silly';
 const logFormat = winston.format.combine(
@@ -40,6 +41,9 @@ const logFormat = winston.format.combine(
         }),
       ],
     }),
+
+    //info: MikroORM 모듈 등록
+    MikroOrmModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
